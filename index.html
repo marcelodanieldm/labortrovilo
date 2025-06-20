@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuentra tu Trabajo QA Ideal/Trovu vian revan laboron en Teknologio 🚀</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Enlace a Font Awesome para iconos (alternativa a emojis o para complementarlos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="light-mode">
+    <header>
+        <h1> Labortrovilo 🔎✨</h1>
+        <div class="controls-header">
+            <!-- Botón para alternar entre modo claro y oscuro -->
+            <button id="theme-toggle" title="Cambiar Tema">💡</button>
+            <!-- Selector de idioma -->
+            <select id="language-switcher" title="Cambiar Idioma">
+                <option value="es">Español 🇪🇸</option>
+                <option value="en">English 🇬🇧</option>
+                <option value="eo">Esperanto 💚</option>
+            </select>
+        </div>
+    </header>
+
+    <main>
+        <!-- Barra lateral con los filtros -->
+        <aside class="sidebar">
+            <div class="filter-group search-bar">
+                <input type="text" id="searchInput" placeholder="Buscar por palabra clave... 🔍">
+                <button id="searchButton">Buscar</button>
+            </div>
+
+            <div class="filter-group">
+                <h3>Modalidad 📍</h3>
+                <label><input type="checkbox" name="modality" value="remote"> Remoto 🏠</label>
+                <label><input type="checkbox" name="modality" value="hybrid"> Híbrido 🏢</label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Relocalización ✈️</h3>
+                <label><input type="radio" name="relocation" value="yes"> Sí ✅</label>
+                <label><input type="radio" name="relocation" value="no"> No ❌</label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Región del Puesto 🌎</h3>
+                <label><input type="checkbox" name="region" value="LATAM"> LATAM 🇧🇷🇲🇽🇦🇷</label>
+                <label><input type="checkbox" name="region" value="EMEA"> EMEA 🇪🇺🇦🇪</label>
+                <label><input type="checkbox" name="region" value="Europe"> Europa 🇪🇺</label>
+            </div>
+
+            <!-- Botón para limpiar todos los filtros -->
+            <button id="clearFiltersButton" class="clear-button">Limpiar Filtros 🗑️</button>
+        </aside>
+
+        <!-- Sección principal de contenido -->
+        <section class="content">
+            <div class="job-results-header">
+                <!-- Mostrador de posiciones encontradas en total -->
+                <h2 id="jobCount">Total de Posiciones Encontradas: 0 📊</h2>
+            </div>
+            <div id="jobListings" class="job-listings">
+                <!-- Los resultados de los trabajos se inyectarán aquí por JavaScript -->
+                <p class="no-results">¡Animate a buscar! 🕵️‍♀️ No hay resultados aún o probar otros filtros.</p>
+            </div>
+
+            <!-- Sección para suscribirse -->
+            <section class="subscribe-section">
+                <h2>¿No encontaste lo que buscas? 🧐 ¡Suscríbete!</h2>
+                <p>Te enviaremos las últimas y mejores oportunidades de QA directamente a tu bandeja de entrada. 📩</p>
+                <form id="subscribeForm">
+                    <input type="email" id="subscribeEmail" placeholder="Tu correo electrónico" required>
+                    <button type="submit">Suscribirme 👍</button>
+                </form>
+            </section>
+
+            <!-- Sección de artículos de blog -->
+            <section class="blog-section">
+                <h2>Artículos Recientes del Blog 📚</h2>
+                <div class="blog-articles">
+                    <article class="blog-post">
+                        <h3>Las Habilidades Clave del QA Moderno 🧠</h3>
+                        <p>Descubre qué necesitas para destacar en el mundo del aseguramiento de calidad hoy. ✨</p>
+                        <a href="#">Leer más...</a>
+                    </article>
+                    <article class="blog-post">
+                        <h3>Automatización vs. Testing Manual: ¿Dónde Invertir? 🤖✍️</h3>
+                        <p>Un análisis profundo sobre las tendencias actuales en testing y cómo impactan tu carrera.</p>
+                        <a href="#">Leer más...</a>
+                    </article>
+                    <article class="blog-post">
+                        <h3>Guía Definitiva para Entrevistas de QA 🗣️🚀</h3>
+                        <p>Consejos y trucos para superar cualquier entrevista técnica o de comportamiento.</p>
+                        <a href="#">Leer más...</a>
+                    </article>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Labortrovilo. Todos los derechos reservados. 💼</p>
+    </footer>
+
+    <!-- Enlace al archivo JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

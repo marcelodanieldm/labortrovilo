@@ -1,0 +1,489 @@
+/* Variables CSS para una gestión sencilla del tema claro/oscuro */
+:root {
+    /* Colores para Modo Claro */
+    --bg-color-light: #f4f7f6; /* Fondo general claro */
+    --text-color-light: #333; /* Color de texto principal claro */
+    --header-bg-light: #2c3e50; /* Fondo de encabezado oscuro */
+    --header-text-light: #ecf0f1; /* Texto de encabezado claro */
+    --sidebar-bg-light: #ecf0f1; /* Fondo de barra lateral muy claro */
+    --card-bg-light: #ffffff; /* Fondo de tarjetas y secciones claro */
+    --border-color-light: #e0e0e0; /* Color de borde claro */
+    --button-bg-light: #3498db; /* Fondo de botón azul */
+    --button-text-light: #ffffff; /* Texto de botón blanco */
+    --hover-color-light: #2980b9; /* Color de hover para botones claro */
+    --accent-color-light: #2ecc71; /* Color de acento verde */
+}
+
+/* Clases para Modo Oscuro, sobrescriben las variables del root */
+.dark-mode {
+    --bg-color-dark: #2c3e50; /* Fondo general oscuro */
+    --text-color-dark: #ecf0f1; /* Color de texto principal oscuro */
+    --header-bg-dark: #1a242f; /* Fondo de encabezado muy oscuro */
+    --header-text-dark: #ffffff; /* Texto de encabezado blanco */
+    --sidebar-bg-dark: #34495e; /* Fondo de barra lateral gris azulado */
+    --card-bg-dark: #4a6572; /* Fondo de tarjetas y secciones gris azulado oscuro */
+    --border-color-dark: #5a7582; /* Color de borde oscuro */
+    --button-bg-dark: #9b59b6; /* Fondo de botón púrpura */
+    --button-text-dark: #ffffff; /* Texto de botón blanco */
+    --hover-color-dark: #8e44ad; /* Color de hover para botones oscuro */
+    --accent-color-dark: #f1c40f; /* Color de acento amarillo */
+}
+
+/* Estilos base del cuerpo */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ocupa al menos el 100% de la altura del viewport */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave al cambiar de tema */
+}
+
+/* Aplicación de variables para el Modo Claro */
+body.light-mode {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+body.light-mode header {
+    background-color: var(--header-bg-light);
+    color: var(--header-text-light);
+}
+body.light-mode .sidebar {
+    background-color: var(--sidebar-bg-light);
+    border-right: 1px solid var(--border-color-light);
+}
+body.light-mode .filter-group,
+body.light-mode .job-card,
+body.light-mode .blog-post,
+body.light-mode .subscribe-section {
+    background-color: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+}
+body.light-mode button,
+body.light-mode input[type="submit"],
+body.light-mode #searchButton,
+body.light-mode .clear-button,
+body.light-mode .subscribe-section button[type="submit"] {
+    background-color: var(--button-bg-light);
+    color: var(--button-text-light);
+}
+body.light-mode button:hover,
+body.light-mode input[type="submit"]:hover,
+body.light-mode #searchButton:hover,
+body.light-mode .clear-button:hover,
+body.light-mode .subscribe-section button[type="submit"]:hover {
+    background-color: var(--hover-color-light);
+}
+body.light-mode input[type="text"],
+body.light-mode input[type="email"],
+body.light-mode select {
+    border: 1px solid var(--border-color-light);
+    background-color: var(--card-bg-light);
+    color: var(--text-color-light);
+}
+body.light-mode .filter-group h3,
+body.light-mode #jobCount,
+body.light-mode .job-card .seniority,
+body.light-mode .job-card .salary {
+    color: var(--accent-color-light);
+}
+body.light-mode .job-card-header h3,
+body.light-mode .subscribe-section h2,
+body.light-mode .blog-section h2,
+body.light-mode .blog-post h3 {
+    color: var(--header-bg-light);
+}
+body.light-mode .blog-post a {
+    color: var(--button-bg-light);
+}
+body.light-mode .blog-post a:hover {
+    color: var(--hover-color-light);
+}
+body.light-mode footer {
+    background-color: var(--header-bg-light);
+    color: var(--header-text-light);
+}
+
+/* Aplicación de variables para el Modo Oscuro */
+body.dark-mode {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+body.dark-mode header {
+    background-color: var(--header-bg-dark);
+    color: var(--header-text-dark);
+}
+body.dark-mode .sidebar {
+    background-color: var(--sidebar-bg-dark);
+    border-right: 1px solid var(--border-color-dark);
+}
+body.dark-mode .filter-group,
+body.dark-mode .job-card,
+body.dark-mode .blog-post,
+body.dark-mode .subscribe-section {
+    background-color: var(--card-bg-dark);
+    border: 1px solid var(--border-color-dark);
+}
+body.dark-mode button,
+body.dark-mode input[type="submit"],
+body.dark-mode #searchButton,
+body.dark-mode .clear-button,
+body.dark-mode .subscribe-section button[type="submit"] {
+    background-color: var(--button-bg-dark);
+    color: var(--button-text-dark);
+}
+body.dark-mode button:hover,
+body.dark-mode input[type="submit"]:hover,
+body.dark-mode #searchButton:hover,
+body.dark-mode .clear-button:hover,
+body.dark-mode .subscribe-section button[type="submit"]:hover {
+    background-color: var(--hover-color-dark);
+}
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode select {
+    border: 1px solid var(--border-color-dark);
+    background-color: var(--card-bg-dark);
+    color: var(--text-color-dark);
+}
+body.dark-mode .filter-group h3,
+body.dark-mode #jobCount,
+body.dark-mode .job-card .seniority,
+body.dark-mode .job-card .salary,
+body.dark-mode .subscribe-section h2,
+body.dark-mode .blog-section h2,
+body.dark-mode .blog-post h3 {
+    color: var(--accent-color-dark);
+}
+body.dark-mode .job-card-header h3 {
+    color: var(--accent-color-dark); /* Color del título del puesto en modo oscuro */
+}
+body.dark-mode .job-card .date {
+    color: #bbb;
+}
+body.dark-mode .no-results {
+    color: #ccc;
+}
+body.dark-mode .blog-post a {
+    color: var(--button-bg-dark);
+}
+body.dark-mode .blog-post a:hover {
+    color: var(--hover-color-dark);
+}
+body.dark-mode footer {
+    background-color: var(--header-bg-dark);
+    color: var(--header-text-dark);
+}
+body.dark-mode .company-logo {
+    border: 1px solid var(--border-color-dark);
+}
+
+
+/* Estilos del Encabezado */
+header {
+    display: flex;
+    justify-content: space-between; /* Espacio entre el título y los controles */
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+.controls-header {
+    display: flex;
+    gap: 15px; /* Espacio entre los controles */
+    align-items: center;
+}
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s; /* Transición al hacer hover */
+}
+#theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+#language-switcher {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Diseño Principal (barra lateral y contenido) */
+main {
+    display: flex;
+    flex: 1; /* Ocupa el espacio restante */
+    padding: 20px;
+    gap: 20px; /* Espacio entre la barra lateral y el contenido */
+    flex-wrap: wrap; /* Permite que los paneles se envuelvan en pantallas pequeñas */
+}
+.sidebar {
+    flex: 0 0 280px; /* Ancho fijo para la barra lateral */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.content {
+    flex: 1; /* Ocupa el espacio restante del main */
+    min-width: 300px; /* Ancho mínimo para el contenido */
+}
+
+/* Grupos de Filtros */
+.filter-group {
+    margin-bottom: 25px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+.filter-group h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.15rem;
+}
+.filter-group label {
+    display: block; /* Cada label en su propia línea */
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+.filter-group input[type="checkbox"],
+.filter-group input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.1); /* Hace los checkboxes/radios un poco más grandes */
+}
+.search-bar {
+    display: flex;
+    gap: 10px;
+}
+#searchInput {
+    flex: 1; /* Ocupa el espacio restante */
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+#searchButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.clear-button {
+    width: 100%; /* Ocupa todo el ancho */
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.2s;
+}
+
+/* Listado de Trabajos */
+.job-results-header {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    text-align: center;
+}
+#jobCount {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.job-listings {
+    display: grid;
+    /* Columnas responsivas: mínimo de 300px, máximo 1fr (fracción del espacio) */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.job-card {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Para empujar el contenido hacia arriba y abajo */
+}
+.job-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.company-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Circular */
+    object-fit: cover; /* Ajusta la imagen sin distorsionarla */
+    margin-right: 15px;
+    border: 1px solid var(--border-color-light); /* Borde sutil */
+}
+.job-card-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+.job-card p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+}
+.job-card .seniority, .job-card .salary {
+    font-weight: bold;
+}
+.job-card .date {
+    font-style: italic;
+    font-size: 0.85rem;
+    color: #777;
+}
+.no-results {
+    text-align: center;
+    grid-column: 1 / -1; /* Centra el mensaje en todo el ancho del grid */
+    font-size: 1.2rem;
+    padding: 30px;
+    color: #666;
+}
+
+/* Sección de Suscripción */
+.subscribe-section {
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.subscribe-section h2 {
+    margin-top: 0;
+    font-size: 1.8rem;
+}
+.subscribe-section p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+#subscribeForm {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+#subscribeEmail {
+    flex: 1;
+    max-width: 350px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.subscribe-section button[type="submit"] {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Sección de Blog */
+.blog-section {
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.blog-section h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+.blog-articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+.blog-post {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.blog-post h3 {
+    font-size: 1.25rem;
+    margin-top: 0;
+}
+.blog-post p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio restante */
+}
+.blog-post a {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+.blog-post a:hover {
+    text-decoration: underline;
+}
+
+/* Pie de Página */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+/* Diseño Responsivo para pantallas más pequeñas */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column; /* Apila la barra lateral y el contenido */
+        padding: 10px;
+    }
+    .sidebar {
+        flex: none; /* Elimina el ancho fijo */
+        width: 100%;
+        margin-bottom: 20px;
+        border-right: none; /* Elimina el borde derecho */
+        border-bottom: 1px solid var(--border-color-light); /* Añade un borde inferior */
+    }
+    body.dark-mode .sidebar {
+        border-bottom: 1px solid var(--border-color-dark);
+    }
+    .job-listings {
+        grid-template-columns: 1fr; /* Una columna para los resultados de trabajos */
+    }
+    #subscribeForm {
+        flex-direction: column; /* Apila el email y el botón de suscripción */
+        align-items: center;
+    }
+    #subscribeEmail {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    .controls-header {
+        width: 100%;
+        justify-content: center; /* Centra los controles del header */
+        margin-top: 15px;
+    }
+    .subscribe-section button[type="submit"] {
+        width: 100%;
+    }
+}
