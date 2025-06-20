@@ -5,6 +5,6 @@ Una alternativa para encontrar trabajo de IT aparte de los clasicos portales.
 
 Requirements/instalindaj'oj/Requerimientos.
 NodeJS
-Puppeteer.
+Playwright
 
 
