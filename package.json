@@ -1,0 +1,23 @@
+{
+  "name": "labortrovilo",
+  "version": "1.0.0",
+  "description": "An alternative tool to find IT jobs outside classic job portals.\r Alia ilo por trovi laborojn, krom plej uzataj laborpag'oj.\r Una alternativa para encontrar trabajo de IT aparte de los clasicos portales.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelodanieldm/labortrovilo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/marcelodanieldm/labortrovilo/issues"
+  },
+  "homepage": "https://github.com/marcelodanieldm/labortrovilo#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.0.3"
+  }
+}
