@@ -1,0 +1,12 @@
+
+//Lista de ATS para ser scrapeados.
+const google = 'site:careers.google.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const greenhouse = 'site:boards.greenhouse.io ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const lever = 'site:jobs.lever.co ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const smartRecruiters = 'site:smartrecruiters.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const workable = 'site:workable.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const myworkday = 'site:myworkdayjobs.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const bambooHR = 'site:bamboohr.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const jobvite = 'site:jobvite.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const icims = 'site:icims.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'
+const workable = 'site:workable.com ("UX designer" OR "UI designer" OR "UX/UI designer" OR "user experience designer" OR "user interface designer" OR "UX researcher" OR "UI developer" OR "product designer") AND "remote"'

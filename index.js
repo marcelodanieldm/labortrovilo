@@ -63,7 +63,7 @@ async function scrapeGoogle(query) {
 }
 
 // Ejemplo de uso:
-const searchQuery = 'escrapeando con puppeteer';
+const searchQuery = 'escrapeando con Playwright';
 scrapeGoogle(searchQuery);
 
 // Se puede pasar un argumento desde la línea de comandos
