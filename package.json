@@ -1,16 +1,29 @@
 {
   "name": "labortrovilo",
-  "version": "1.0.0",
-  "description": "An alternative tool to find IT jobs outside classic job portals.\r Alia ilo por trovi laborojn, krom plej uzataj laborpag'oj.\r Una alternativa para encontrar trabajo de IT aparte de los clasicos portales.",
-  "main": "index.js",
-  "scripts": {},
+  "version": "2.0.0",
+  "description": "Python-based job scraping platform using Playwright | Plataforma de scraping de trabajos basada en Python usando Playwright | Python-bazita laborskrapada platformo uzante Playwright",
+  "main": "engine.py",
+  "scripts": {
+    "note": "Este proyecto usa Python con Playwright. Los archivos JS son legacy.",
+    "legacy:test": "npx playwright test",
+    "python:run": "python engine.py",
+    "python:setup": "pip install -r requirements.txt && playwright install chromium"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marcelodanieldm/labortrovilo.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "python",
+    "playwright",
+    "web-scraping",
+    "job-search",
+    "ats",
+    "sqlalchemy",
+    "pydantic"
+  ],
+  "author": "Daniel",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/marcelodanieldm/labortrovilo/issues"
@@ -19,5 +32,9 @@
   "devDependencies": {
     "@playwright/test": "^1.53.1",
     "@types/node": "^24.0.3"
-  }
+  },
+  "engines": {
+    "python": ">=3.13"
+  },
+  "note": "NOTA: Este proyecto ahora usa Python exclusivamente para Playwright. Los archivos JavaScript son legacy y serán removidos en futuras versiones."
 }
