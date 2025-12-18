@@ -108,6 +108,22 @@ class NotificationFrequency(str, enum.Enum):
     WEEKLY = "WEEKLY"  # Semanal
 
 
+class SubscriptionTier(str, enum.Enum):
+    """Tiers de suscripción"""
+    FREE = "FREE"  # 5 búsquedas diarias, sin Intelligence Insights
+    CANDIDATO_PREMIUM = "CANDIDATO_PREMIUM"  # Ilimitado, alertas tiempo real, Red Flags IA
+    HR_PRO_PLAN = "HR_PRO_PLAN"  # API access, datasets, Hiring Signals
+
+
+class SubscriptionStatus(str, enum.Enum):
+    """Estados de suscripción"""
+    ACTIVE = "ACTIVE"
+    CANCELED = "CANCELED"
+    PAST_DUE = "PAST_DUE"
+    INCOMPLETE = "INCOMPLETE"
+    TRIALING = "TRIALING"
+
+
 class User(Base):
     """
     Representa un usuario del sistema
@@ -124,9 +140,28 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
+    # Monetización y Suscripción
+    subscription_tier = Column(Enum(SubscriptionTier), default=SubscriptionTier.FREE, nullable=False)
+    subscription_status = Column(Enum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False)
+    stripe_customer_id = Column(String(255), nullable=True, index=True)
+    stripe_subscription_id = Column(String(255), nullable=True)
+    subscription_start_date = Column(DateTime, nullable=True)
+    subscription_end_date = Column(DateTime, nullable=True)
+    
+    # Sistema de Créditos API (para HR_PRO)
+    api_credits = Column(Integer, default=0)  # Créditos disponibles
+    api_credits_used = Column(Integer, default=0)  # Total usado históricamente
+    
+    # Límite de búsquedas diarias (FREE tier)
+    daily_searches = Column(Integer, default=0)  # Búsquedas realizadas hoy
+    daily_search_limit = Column(Integer, default=5)  # Límite según tier
+    last_search_reset = Column(DateTime, default=datetime.utcnow)  # Última vez que se reseteo el contador
+    
     # Relaciones
     alert_configs = relationship("AlertConfig", back_populates="user", cascade="all, delete-orphan")
     notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
+    subscriptions = relationship("Subscription", back_populates="user", cascade="all, delete-orphan")
+    transactions = relationship("Transaction", back_populates="user", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<User(email='{self.email}', role='{self.role}')>"
@@ -211,3 +246,84 @@ class Notification(Base):
     
     def __repr__(self):
         return f"<Notification(type='{self.notification_type}', user_id={self.user_id})>"
+
+
+class Subscription(Base):
+    """
+    Historial de suscripciones de usuarios
+    Tracking de cambios de plan y eventos de Stripe
+    """
+    __tablename__ = "subscriptions"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    
+    # Stripe IDs
+    stripe_subscription_id = Column(String(255), nullable=False, unique=True, index=True)
+    stripe_customer_id = Column(String(255), nullable=False)
+    stripe_price_id = Column(String(255), nullable=False)  # price_xxx de Stripe
+    
+    # Detalles de la suscripción
+    tier = Column(Enum(SubscriptionTier), nullable=False)
+    status = Column(Enum(SubscriptionStatus), nullable=False)
+    
+    # Fechas
+    current_period_start = Column(DateTime, nullable=True)
+    current_period_end = Column(DateTime, nullable=True)
+    trial_start = Column(DateTime, nullable=True)
+    trial_end = Column(DateTime, nullable=True)
+    canceled_at = Column(DateTime, nullable=True)
+    ended_at = Column(DateTime, nullable=True)
+    
+    # Información de pago
+    amount = Column(Float, nullable=False)  # Precio mensual/anual
+    currency = Column(String(10), default="usd")
+    interval = Column(String(20), nullable=False)  # "month" o "year"
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relaciones
+    user = relationship("User", back_populates="subscriptions")
+    
+    def __repr__(self):
+        return f"<Subscription(user_id={self.user_id}, tier='{self.tier}', status='{self.status}')>"
+
+
+class Transaction(Base):
+    """
+    Registro de todas las transacciones (suscripciones, compra de créditos, pagos)
+    Auditoría completa del sistema de pagos
+    """
+    __tablename__ = "transactions"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    
+    # Stripe IDs
+    stripe_payment_intent_id = Column(String(255), nullable=True, unique=True, index=True)
+    stripe_invoice_id = Column(String(255), nullable=True)
+    stripe_subscription_id = Column(String(255), nullable=True)
+    
+    # Tipo de transacción
+    transaction_type = Column(String(50), nullable=False)  # "subscription", "credit_purchase", "refund"
+    
+    # Detalles
+    amount = Column(Float, nullable=False)
+    currency = Column(String(10), default="usd")
+    status = Column(String(50), nullable=False)  # "succeeded", "pending", "failed"
+    description = Column(Text, nullable=True)
+    
+    # Para compra de créditos
+    credits_purchased = Column(Integer, default=0)
+    
+    # Metadata
+    metadata_info = Column(JSON, nullable=True)  # Info adicional
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relaciones
+    user = relationship("User", back_populates="transactions")
+    
+    def __repr__(self):
+        return f"<Transaction(user_id={self.user_id}, type='{self.transaction_type}', amount={self.amount})>"

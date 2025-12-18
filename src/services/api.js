@@ -254,6 +254,84 @@ export const authService = {
   },
 };
 
+// Servicios de Billing y Monetización
+export const billingService = {
+  // Obtener información de pricing
+  getPricing: () => {
+    return apiClient.get('/api/v1/billing/pricing');
+  },
+
+  // Obtener información de suscripción del usuario
+  getSubscription: () => {
+    return apiClient.get('/api/v1/billing/subscription');
+  },
+
+  // Crear sesión de checkout para suscripción
+  createCheckoutSession: (tier, interval = 'monthly') => {
+    return apiClient.post('/api/v1/billing/checkout/subscription', {
+      tier,
+      interval,
+      success_url: `${window.location.origin}/billing/success`,
+      cancel_url: `${window.location.origin}/pricing`
+    });
+  },
+
+  // Crear sesión de checkout para compra de créditos
+  createCreditsCheckout: (credits) => {
+    return apiClient.post('/api/v1/billing/checkout/credits', {
+      credits,
+      success_url: `${window.location.origin}/billing/success`,
+      cancel_url: `${window.location.origin}/billing`
+    });
+  },
+
+  // Cancelar suscripción
+  cancelSubscription: (immediately = false) => {
+    return apiClient.post('/api/v1/billing/subscription/cancel', {
+      immediately
+    });
+  },
+
+  // Cambiar tier de suscripción
+  upgradeSubscription: (newTier) => {
+    return apiClient.post(`/api/v1/billing/subscription/upgrade?new_tier=${newTier}`);
+  },
+
+  // Obtener balance de créditos API
+  getCreditBalance: () => {
+    return apiClient.get('/api/v1/billing/credits/balance');
+  },
+
+  // Obtener cuota de búsquedas diarias
+  getSearchQuota: () => {
+    return apiClient.get('/api/v1/billing/search-quota');
+  },
+
+  // Obtener historial de transacciones
+  getTransactions: (limit = 50) => {
+    return apiClient.get('/api/v1/billing/transactions', { limit });
+  },
+
+  // [ADMIN] Obtener todas las suscripciones
+  getAllSubscriptions: () => {
+    return apiClient.get('/api/v1/billing/admin/subscriptions');
+  },
+
+  // [ADMIN] Obtener estadísticas de revenue
+  getRevenueStats: () => {
+    return apiClient.get('/api/v1/billing/admin/revenue');
+  },
+};
+
+// Consolidar todos los servicios en un objeto api
+export const api = {
+  jobs: jobService,
+  scrapers: scraperService,
+  analytics: analyticsService,
+  auth: authService,
+  billing: billingService,
+};
+
 // Mock data helper (para desarrollo sin backend)
 export const useMockData = () => {
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));

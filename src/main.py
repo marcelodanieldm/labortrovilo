@@ -57,6 +57,8 @@ from src.api_models import (
 from src.models import Job, Company
 from src.database import init_db, db_manager
 from src.alerts_router import router as alerts_router
+from src.billing_router import router as billing_router
+from src.stripe_webhooks import router as webhooks_router
 
 
 # ============================================================
@@ -93,12 +95,18 @@ app = FastAPI(
         {
             "name": "Alerts",
             "description": "Endpoints de configuración de alertas personalizadas"
+        },
+        {
+            "name": "Billing",
+            "description": "Endpoints de monetización y gestión de suscripciones Stripe"
         }
     ]
 )
 
-# Incluir router de alertas
+# Incluir routers
 app.include_router(alerts_router, prefix="/api/v1")
+app.include_router(billing_router, prefix="/api/v1")
+app.include_router(webhooks_router)  # Webhooks sin prefijo para compatibilidad con Stripe
 
 # CORS Middleware
 app.add_middleware(
