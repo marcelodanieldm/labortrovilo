@@ -56,6 +56,7 @@ from src.api_models import (
 )
 from src.models import Job, Company
 from src.database import init_db, db_manager
+from src.alerts_router import router as alerts_router
 
 
 # ============================================================
@@ -88,9 +89,16 @@ app = FastAPI(
         {
             "name": "Superuser",
             "description": "Endpoints de control total y billing (rol: SUPERUSER)"
+        },
+        {
+            "name": "Alerts",
+            "description": "Endpoints de configuración de alertas personalizadas"
         }
     ]
 )
+
+# Incluir router de alertas
+app.include_router(alerts_router, prefix="/api/v1")
 
 # CORS Middleware
 app.add_middleware(

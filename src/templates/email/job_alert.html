@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ notification.title }}</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+             background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 20px;">
+    
+    <div style="max-width: 600px; margin: 0 auto; background-color: #1e293b; 
+                border-radius: 12px; padding: 30px; border: 1px solid #334155; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%); 
+                       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                       background-clip: text; margin: 0; font-size: 32px; font-weight: 700;">
+                Labortrovilo
+            </h1>
+            <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 14px;">Tu portal de empleo tech</p>
+        </div>
+        
+        {% if is_golden_lead %}
+        <!-- Golden Lead Badge -->
+        <div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); 
+                    padding: 20px; border-radius: 10px; margin-bottom: 25px; text-align: center; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);">
+            <div style="font-size: 48px; margin-bottom: 10px;">🌟</div>
+            <h2 style="color: white; margin: 0; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                Golden Lead
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 15px;">
+                Oportunidad Única - Alta Prioridad
+            </p>
+            {% if urgency_score %}
+            <div style="margin-top: 12px; padding: 8px 16px; background: rgba(255, 255, 255, 0.2); 
+                        border-radius: 20px; display: inline-block;">
+                <span style="color: white; font-size: 13px; font-weight: 600;">
+                    Urgency Score: {{ "%.2f"|format(urgency_score) }}
+                </span>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Greeting -->
+        <div style="margin-bottom: 25px;">
+            <p style="font-size: 18px; color: #e2e8f0; margin: 0 0 12px 0; font-weight: 600;">
+                Hola {{ user_name }},
+            </p>
+            <p style="font-size: 16px; color: #cbd5e1; margin: 0; line-height: 1.6;">
+                {% if is_golden_lead %}
+                ¡Hemos encontrado una oportunidad excepcional que coincide perfectamente con tu perfil!
+                {% else %}
+                Hemos encontrado una nueva oportunidad que podría interesarte:
+                {% endif %}
+            </p>
+        </div>
+        
+        <!-- Job Card -->
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+                    border-radius: 10px; padding: 25px; 
+                    border-left: 4px solid {% if is_golden_lead %}#f59e0b{% else %}#0ea5e9{% endif %}; 
+                    margin: 25px 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
+            
+            <h2 style="color: #e2e8f0; margin: 0 0 20px 0; font-size: 24px; font-weight: 700; line-height: 1.3;">
+                {{ job.title }}
+            </h2>
+            
+            <!-- Job Details Grid -->
+            <div style="margin-bottom: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <span style="color: #94a3b8; font-size: 14px; display: block; margin-bottom: 4px;">🏢 Empresa</span>
+                    <span style="color: #e2e8f0; font-size: 16px; font-weight: 600;">{{ job.company_name }}</span>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <span style="color: #94a3b8; font-size: 14px; display: block; margin-bottom: 4px;">💰 Salario</span>
+                    <span style="color: {% if job.salary_max and job.salary_max > 100000 %}#10b981{% else %}#e2e8f0{% endif %}; 
+                                 font-size: 16px; font-weight: 600;">{{ salary_info }}</span>
+                </div>
+                
+                {% if job.modality %}
+                <div style="margin-bottom: 15px;">
+                    <span style="color: #94a3b8; font-size: 14px; display: block; margin-bottom: 4px;">📍 Modalidad</span>
+                    <span style="color: #e2e8f0; font-size: 16px; font-weight: 600;">{{ job.modality }}</span>
+                </div>
+                {% endif %}
+                
+                {% if tech_stack_list %}
+                <div style="margin-bottom: 15px;">
+                    <span style="color: #94a3b8; font-size: 14px; display: block; margin-bottom: 8px;">💻 Tech Stack</span>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        {% for tech in tech_stack_list[:8] %}
+                        <span style="background-color: #334155; color: #0ea5e9; padding: 6px 12px; 
+                                     border-radius: 6px; font-size: 13px; font-weight: 500; 
+                                     border: 1px solid #475569;">
+                            {{ tech }}
+                        </span>
+                        {% endfor %}
+                        {% if tech_stack_list|length > 8 %}
+                        <span style="background-color: #334155; color: #94a3b8; padding: 6px 12px; 
+                                     border-radius: 6px; font-size: 13px; font-weight: 500; 
+                                     border: 1px solid #475569;">
+                            +{{ tech_stack_list|length - 8 }} más
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- CTA Button -->
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="{{ job.source_url }}" 
+                   style="display: inline-block; 
+                          background: {% if is_golden_lead %}linear-gradient(135deg, #f59e0b 0%, #d97706 100%){% else %}linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%){% endif %}; 
+                          color: white; padding: 14px 32px; text-decoration: none; 
+                          border-radius: 8px; font-weight: 600; font-size: 16px;
+                          box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+                          transition: all 0.3s ease;">
+                    Ver Oferta Completa →
+                </a>
+            </div>
+        </div>
+        
+        {% if is_golden_lead %}
+        <!-- Golden Lead Info -->
+        <div style="background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); 
+                    border-radius: 8px; padding: 16px; margin: 20px 0;">
+            <p style="color: #fbbf24; margin: 0; font-size: 14px; line-height: 1.6;">
+                <strong>¿Por qué es una Golden Lead?</strong><br>
+                Esta oferta cumple con criterios excepcionales: alta urgencia, empresa en crecimiento, 
+                salario competitivo y tech stack alineado con tu perfil. ¡No la dejes pasar!
+            </p>
+        </div>
+        {% endif %}
+        
+        <!-- Additional Info -->
+        <div style="background-color: #0f172a; border-radius: 8px; padding: 20px; margin: 20px 0; 
+                    border: 1px solid #334155;">
+            <h3 style="color: #e2e8f0; margin: 0 0 12px 0; font-size: 16px; font-weight: 600;">
+                💡 Consejos para aplicar
+            </h3>
+            <ul style="color: #94a3b8; margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li>Revisa que tu perfil coincida con los requisitos principales</li>
+                <li>Personaliza tu CV destacando las tecnologías mencionadas</li>
+                <li>Investiga sobre la empresa antes de aplicar</li>
+                {% if is_golden_lead %}
+                <li style="color: #fbbf24; font-weight: 600;">Aplica lo antes posible - alta demanda esperada</li>
+                {% endif %}
+            </ul>
+        </div>
+        
+        <!-- Footer -->
+        <div style="margin-top: 35px; padding-top: 25px; border-top: 1px solid #334155;">
+            <div style="text-align: center;">
+                <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">
+                    © 2024 Labortrovilo. Todos los derechos reservados.
+                </p>
+                <p style="color: #475569; font-size: 13px; margin: 0 0 15px 0;">
+                    Para gestionar tus preferencias de alertas, visita tu 
+                    <a href="#" style="color: #0ea5e9; text-decoration: none;">panel de control</a>.
+                </p>
+                
+                <!-- Social Links -->
+                <div style="margin-top: 15px;">
+                    <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px; font-size: 12px;">LinkedIn</a>
+                    <span style="color: #475569;">•</span>
+                    <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px; font-size: 12px;">Twitter</a>
+                    <span style="color: #475569;">•</span>
+                    <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px; font-size: 12px;">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

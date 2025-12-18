@@ -31,3 +31,10 @@ python-jose[cryptography]>=3.3.0  # JWT tokens
 passlib[bcrypt]>=1.7.4  # Hash de contraseñas
 python-multipart>=0.0.9  # Form data support
 email-validator>=2.1.0  # Validación de emails para Pydantic
+
+# Task Scheduling / Notifications
+APScheduler>=3.10.4  # Job scheduling
+celery>=5.3.4  # Distributed task queue
+redis>=5.0.1  # Celery broker
+sendgrid>=6.11.0  # Email service
+jinja2>=3.1.2  # Email templates

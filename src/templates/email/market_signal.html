@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ notification.title }}</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+             background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 20px;">
+    
+    <div style="max-width: 600px; margin: 0 auto; background-color: #1e293b; 
+                border-radius: 12px; padding: 30px; border: 1px solid #334155; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); 
+                       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                       background-clip: text; margin: 0; font-size: 32px; font-weight: 700;">
+                Labortrovilo
+            </h1>
+            <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 14px;">Market Intelligence</p>
+        </div>
+        
+        <!-- Market Signal Badge -->
+        <div style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); 
+                    padding: 20px; border-radius: 10px; margin-bottom: 25px; text-align: center; 
+                    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);">
+            <div style="font-size: 48px; margin-bottom: 10px;">🚀</div>
+            <h2 style="color: white; margin: 0; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                Market Signal
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 15px;">
+                Alta Velocidad de Contratación Detectada
+            </p>
+        </div>
+        
+        <!-- Greeting -->
+        <div style="margin-bottom: 25px;">
+            <p style="font-size: 18px; color: #e2e8f0; margin: 0 0 12px 0; font-weight: 600;">
+                Hola {{ user_name }},
+            </p>
+            <p style="font-size: 16px; color: #cbd5e1; margin: 0; line-height: 1.6;">
+                Hemos detectado una señal importante en el mercado laboral tech que deberías conocer.
+            </p>
+        </div>
+        
+        <!-- Signal Details Card -->
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+                    border-radius: 10px; padding: 25px; border-left: 4px solid #8b5cf6; 
+                    margin: 25px 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
+            
+            <h3 style="color: #a78bfa; margin: 0 0 8px 0; font-size: 14px; font-weight: 600; 
+                       text-transform: uppercase; letter-spacing: 1px;">
+                Empresa en Expansión
+            </h3>
+            
+            <h2 style="color: #e2e8f0; margin: 0 0 20px 0; font-size: 28px; font-weight: 700;">
+                {{ metadata.company_name if metadata else 'N/A' }}
+            </h2>
+            
+            <!-- Key Metrics -->
+            <div style="background-color: rgba(139, 92, 246, 0.1); border-radius: 8px; padding: 20px; margin: 20px 0;">
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; font-weight: 700; color: #8b5cf6; margin-bottom: 8px;">
+                        {{ metadata.job_count if metadata else '0' }}
+                    </div>
+                    <div style="color: #94a3b8; font-size: 16px;">
+                        puestos publicados en las últimas 24 horas
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Insights -->
+            <div style="margin-top: 25px;">
+                <h4 style="color: #e2e8f0; margin: 0 0 12px 0; font-size: 16px; font-weight: 600;">
+                    📊 ¿Qué significa esto?
+                </h4>
+                
+                <div style="background-color: #0f172a; border-radius: 6px; padding: 15px; margin-bottom: 10px; 
+                            border: 1px solid #334155;">
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 12px;">
+                        <span style="color: #8b5cf6; font-size: 20px; margin-right: 12px;">📈</span>
+                        <div>
+                            <div style="color: #e2e8f0; font-weight: 600; margin-bottom: 4px;">Alta Actividad de Contratación</div>
+                            <div style="color: #94a3b8; font-size: 14px; line-height: 1.5;">
+                                La empresa está en modo de contratación activa, indicando crecimiento o expansión de equipos.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 12px;">
+                        <span style="color: #8b5cf6; font-size: 20px; margin-right: 12px;">💼</span>
+                        <div>
+                            <div style="color: #e2e8f0; font-weight: 600; margin-bottom: 4px;">Múltiples Oportunidades</div>
+                            <div style="color: #94a3b8; font-size: 14px; line-height: 1.5;">
+                                Variedad de roles disponibles puede significar diferentes niveles y especializaciones.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: flex-start;">
+                        <span style="color: #8b5cf6; font-size: 20px; margin-right: 12px;">🤝</span>
+                        <div>
+                            <div style="color: #e2e8f0; font-weight: 600; margin-bottom: 4px;">Oportunidad de Networking</div>
+                            <div style="color: #94a3b8; font-size: 14px; line-height: 1.5;">
+                                Momento ideal para conectar con reclutadores y explorar el ecosistema de la empresa.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actionable Recommendations -->
+        <div style="background-color: #0f172a; border-radius: 8px; padding: 20px; margin: 20px 0; 
+                    border: 1px solid #334155;">
+            <h3 style="color: #e2e8f0; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">
+                🎯 Recomendaciones de acción
+            </h3>
+            <ul style="color: #94a3b8; margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li>Investiga los puestos disponibles en esta empresa</li>
+                <li>Revisa el perfil de la compañía en LinkedIn</li>
+                <li>Conecta con empleados actuales para insights internos</li>
+                <li>Prepara aplicaciones personalizadas para los roles de interés</li>
+                <li>Monitorea la actividad de la empresa en las próximas semanas</li>
+            </ul>
+        </div>
+        
+        <!-- CTA -->
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="#" 
+               style="display: inline-block; 
+                      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); 
+                      color: white; padding: 14px 32px; text-decoration: none; 
+                      border-radius: 8px; font-weight: 600; font-size: 16px;
+                      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);">
+                Ver Puestos de {{ metadata.company_name if metadata else 'Esta Empresa' }} →
+            </a>
+        </div>
+        
+        <!-- Market Context -->
+        <div style="background-color: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); 
+                    border-radius: 8px; padding: 16px; margin: 20px 0;">
+            <p style="color: #a78bfa; margin: 0; font-size: 13px; line-height: 1.6;">
+                <strong>💡 Contexto del Mercado:</strong><br>
+                Las empresas que publican múltiples puestos simultáneamente suelen estar en fases de expansión, 
+                apertura de nuevas oficinas, o lanzamiento de proyectos importantes. Este es un indicador positivo 
+                de salud empresarial y estabilidad laboral.
+            </p>
+        </div>
+        
+        <!-- Footer -->
+        <div style="margin-top: 35px; padding-top: 25px; border-top: 1px solid #334155;">
+            <div style="text-align: center;">
+                <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">
+                    © 2024 Labortrovilo. Todos los derechos reservados.
+                </p>
+                <p style="color: #475569; font-size: 13px; margin: 0 0 15px 0;">
+                    Estas alertas te ayudan a estar un paso adelante en el mercado tech.
+                </p>
+                
+                <!-- Social Links -->
+                <div style="margin-top: 15px;">
+                    <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px; font-size: 12px;">LinkedIn</a>
+                    <span style="color: #475569;">•</span>
+                    <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px; font-size: 12px;">Twitter</a>
+                    <span style="color: #475569;">•</span>
+                    <a href="#" style="color: #64748b; text-decoration: none; margin: 0 10px; font-size: 12px;">Configurar Alertas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

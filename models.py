@@ -1,12 +1,13 @@
 """
 Modelos de base de datos para Labortrovilo / Datumbazaj modeloj por Labortrovilo
-Define la estructura de las tablas Jobs y Companies
-Difinas la strukturon de la tabeloj Jobs kaj Companies
+Define la estructura de las tablas Jobs, Companies, Users, Alerts y Notifications
+Difinas la strukturon de la tabeloj Jobs, Companies, Users, Alerts kaj Notifications
 """
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import Column, Integer, String, Float, DateTime, Text, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Float, DateTime, Text, ForeignKey, UniqueConstraint, Boolean, Enum, JSON
 from sqlalchemy.orm import relationship, declarative_base
+import enum
 
 # Clase base para todos los modelos / Baza klaso por ĉiuj modeloj
 Base = declarative_base()
@@ -81,3 +82,132 @@ class Job(Base):
     
     def __repr__(self):
         return f"<Job(title='{self.title}', company='{self.company_name}')>"
+
+
+# Enums para roles y canales de notificación
+class UserRole(str, enum.Enum):
+    """Roles de usuario en el sistema"""
+    CANDIDATO = "CANDIDATO"
+    HR_PRO = "HR_PRO"
+    ADMIN = "ADMIN"
+    SUPERUSER = "SUPERUSER"
+
+
+class NotificationChannel(str, enum.Enum):
+    """Canales de notificación disponibles"""
+    EMAIL = "EMAIL"
+    SLACK = "SLACK"
+    DISCORD = "DISCORD"
+
+
+class NotificationFrequency(str, enum.Enum):
+    """Frecuencia de notificaciones"""
+    IMMEDIATE = "IMMEDIATE"  # Inmediato
+    HOURLY = "HOURLY"  # Cada hora
+    DAILY = "DAILY"  # Diario
+    WEEKLY = "WEEKLY"  # Semanal
+
+
+class User(Base):
+    """
+    Representa un usuario del sistema
+    Almacena información de autenticación y preferencias
+    """
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(String(255), nullable=False, unique=True, index=True)
+    hashed_password = Column(String(255), nullable=False)
+    full_name = Column(String(255), nullable=True)
+    role = Column(Enum(UserRole), default=UserRole.CANDIDATO, nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relaciones
+    alert_configs = relationship("AlertConfig", back_populates="user", cascade="all, delete-orphan")
+    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
+    
+    def __repr__(self):
+        return f"<User(email='{self.email}', role='{self.role}')>"
+
+
+class AlertConfig(Base):
+    """
+    Configuración de alertas personalizadas por usuario
+    Permite definir criterios y canales de notificación
+    """
+    __tablename__ = "alert_configs"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String(255), nullable=False)  # Nombre descriptivo de la alerta
+    is_active = Column(Boolean, default=True)
+    
+    # Criterios de filtrado (almacenados como JSON)
+    tech_stack = Column(JSON, nullable=True)  # Lista de tecnologías: ["React", "Python"]
+    salary_min = Column(Float, nullable=True)
+    salary_max = Column(Float, nullable=True)
+    keywords = Column(JSON, nullable=True)  # Palabras clave en título/descripción
+    modality = Column(String(50), nullable=True)  # Remoto, Híbrido, Presencial
+    
+    # Configuración de notificación
+    channels = Column(JSON, nullable=False)  # ["EMAIL", "SLACK"]
+    frequency = Column(Enum(NotificationFrequency), default=NotificationFrequency.IMMEDIATE)
+    
+    # Para HR_PRO: Market Signals
+    enable_market_signals = Column(Boolean, default=False)
+    hiring_velocity_threshold = Column(Integer, default=3)  # Alertar si empresa publica X puestos en un día
+    
+    # Webhooks personalizados
+    slack_webhook_url = Column(String(500), nullable=True)
+    discord_webhook_url = Column(String(500), nullable=True)
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relaciones
+    user = relationship("User", back_populates="alert_configs")
+    
+    def __repr__(self):
+        return f"<AlertConfig(name='{self.name}', user_id={self.user_id})>"
+
+
+class Notification(Base):
+    """
+    Registro de notificaciones enviadas
+    Tracking de todas las notificaciones del sistema
+    """
+    __tablename__ = "notifications"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    job_id = Column(Integer, ForeignKey("jobs.id"), nullable=True)
+    
+    # Tipo de notificación
+    notification_type = Column(String(50), nullable=False)  # JOB_MATCH, MARKET_SIGNAL, GOLDEN_LEAD
+    
+    # Contenido
+    title = Column(String(255), nullable=False)
+    message = Column(Text, nullable=False)
+    
+    # Canal y estado
+    channel = Column(Enum(NotificationChannel), nullable=False)
+    is_sent = Column(Boolean, default=False)
+    sent_at = Column(DateTime, nullable=True)
+    
+    # Para Golden Leads
+    is_golden_lead = Column(Boolean, default=False)
+    urgency_score = Column(Float, nullable=True)
+    
+    # Extra data (metadata reservado en SQLAlchemy)
+    extra_data = Column(JSON, nullable=True)  # Info adicional específica del tipo
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relaciones
+    user = relationship("User", back_populates="notifications")
+    job = relationship("Job")
+    
+    def __repr__(self):
+        return f"<Notification(type='{self.notification_type}', user_id={self.user_id})>"
