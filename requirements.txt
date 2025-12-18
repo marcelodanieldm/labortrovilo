@@ -19,3 +19,7 @@ requests==2.31.0
 
 # Date/Time handling
 python-dateutil==2.8.2
+
+# AI / Machine Learning
+openai>=1.54.0  # API de OpenAI para GPT-4, GPT-4o-mini, etc.
+anthropic>=0.39.0  # API de Anthropic para Claude 3

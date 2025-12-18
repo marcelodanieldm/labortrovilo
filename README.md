@@ -8,11 +8,16 @@
 
 ## 📖 Descripción / Priskribo / Description
 
-**Labortrovilo** es una plataforma de scraping inteligente que extrae ofertas de trabajo de múltiples fuentes ATS (Applicant Tracking Systems) y las almacena en una base de datos estructurada. Utiliza Playwright para navegación web avanzada, SQLAlchemy para persistencia de datos y Pydantic para validación robusta.
+**Labortrovilo** es una plataforma de scraping inteligente diseñada con **arquitectura de Senior Data Engineer** que extrae ofertas de trabajo de múltiples fuentes ATS (Applicant Tracking Systems) y las almacena en una base de datos estructurada. Utiliza Playwright para navegación web avanzada, SQLAlchemy para persistencia de datos y Pydantic para validación robusta.
 
-**Labortrovilo** estas inteligenta skrapada platformo kiu ekstraktas laborofertojn de multaj ATS-fontoj (Applicant Tracking Systems) kaj stokas ilin en strukturita datumbazo. Ĝi uzas Playwright por altnivela retumado, SQLAlchemy por datuma persisteco kaj Pydantic por fortika validigo.
+**Labortrovilo** estas inteligenta skrapada platformo dezajnita kun **Seniora Datumingeniisto arkitekturo** kiu ekstraktas laborofertojn de multaj ATS-fontoj (Applicant Tracking Systems) kaj stokas ilin en strukturita datumbazo. Ĝi uzas Playwright por altnivela retumado, SQLAlchemy por datuma persisteco kaj Pydantic por fortika validigo.
 
-**Labortrovilo** is an intelligent scraping platform that extracts job offers from multiple ATS sources (Applicant Tracking Systems) and stores them in a structured database. It uses Playwright for advanced web navigation, SQLAlchemy for data persistence, and Pydantic for robust validation.
+**Labortrovilo** is an intelligent scraping platform designed with **Senior Data Engineer architecture** that extracts job offers from multiple ATS sources (Applicant Tracking Systems) and stores them in a structured database. It uses Playwright for advanced web navigation, SQLAlchemy for data persistence, and Pydantic for robust validation.
+
+### 🎯 Campos Diferenciadores / Distingaj Kampoj / Differentiating Fields
+
+- **`hiring_urgency_score`** (0-100): Score inteligente que calcula la urgencia de contratación basándose en señales del mercado
+- **`is_it_niche`**: Detector automático de nichos especializados de IT (blockchain, quantum, AI, etc.)
 
 ---
 
@@ -28,13 +33,18 @@
 
 ### 🔧 Funcionalidades / Funkcioj / Functionalities
 - 🌐 **Scraping asíncrono** con Playwright para mejor rendimiento
-- 🗄️ **Base de datos relacional** con tablas Jobs y Companies
-- ✅ **Validación automática** de datos antes de inserción
-- 🚫 **Prevención de duplicados** mediante URLs únicas
+- 🗄️ **Base de datos relacional** con tablas Jobs y Companies optimizadas
+- ✅ **Validación automática** con Pydantic antes de inserción
+- 🚫 **Prevención de duplicados** mediante URLs únicas con índices
 - 📊 **Seguimiento de empresas** con métricas de crecimiento
-- 💰 **Extracción de salarios** (cuando disponible)
+- 💰 **Extracción de salarios** con parsing inteligente
 - 🏷️ **Stack tecnológico** identificado y limpio
-- 📝 **Documentación bilingüe** (Español/Esperanto) en todo el código
+- 📝 **Documentación trilingüe** (Español/Esperanto/Inglés) en todo el código
+- 🛡️ **Manejo robusto de errores** - el scraper NO se detiene ante fallos
+- 📊 **Sistema de logging** completo con archivos y consola
+- 🎯 **Detección inteligente de ATS** (Greenhouse, Lever, Workday, etc.)
+- 🚀 **Arquitectura modular** lista para escalar
+- 🤖 **NEW: Módulo de IA** - Procesamiento con LLMs (GPT-4, Claude) para análisis inteligente
 
 ---
 
@@ -133,13 +143,80 @@ playwright install chromium
 ### Paso 6: Configurar variables de entorno / Paŝo 6: Agordi medio-variablojn / Step 6: Configure environment variables
 
 ```bash
-cp .env.example .env
-# Editar .env según necesidades / Redakti .env laŭ bezonoj / Edit .env as needed
+### Paso 7: Ejecutar test básico / Paŝo 7: Plenumi bazan teston / Step 7: Run basic test
+
+```bash
+python test_scraper.py
 ```
 
 ---
 
 ## 💻 Uso / Uzo / Usage
+
+### ⭐ Opción 1: Script de Test Interactivo (RECOMENDADO)
+
+```bash
+python test_scraper.py
+```
+
+Menú interactivo con opciones:
+1. Test completo (BD + Scraping)
+2. Test solo de Base de Datos
+3. Salir
+
+### Opción 2: Usar el Motor de Scraping Directamente
+
+```python
+import asyncio
+from src.scraper_engine import LabortroviloScraper
+from src.database import init_db
+
+async def main():
+    # Inicializar base de datos
+    init_db()
+    
+    # Crear scraper
+    scraper = LabortroviloScraper(headless=True)
+    
+    try:
+        await scraper.initialize()
+        
+        # Scrapear una URL
+        result = await scraper.scrape_job("https://example.com/job")
+        
+        print(f"Éxito: {result.success}")
+        if result.job_data:
+            print(f"Título: {result.job_data.title}")
+            print(f"Urgency Score: {result.job_data.hiring_urgency_score}")
+   external_id` | String(255) | ID externo del ATS / Ekstera ATS-ID / External ATS ID |
+| `title` | String(255) | Título del trabajo / Labortitolo / Job title |
+| `company_id` | Integer (FK) | ID de empresa / Kompania ID / Company ID |
+| `company_name` | String(255) | Nombre empresa (denorm.) / Kompania nomo (denorm.) / Company name (denorm.) |
+| `description` | Text | Descripción procesada / Traktita priskribo / Processed description |
+| `raw_description` | Text | Descripción original / Originala priskribo / Original description |
+| `stack` | Text | Stack tecnológico / Teknologia stako / Tech stack |
+| `required_skills` | Text | Habilidades requeridas / Postulataj kapabloj / Required skills |
+| `nice_to_have_skills` | Text | Habilidades deseables / Dezireblaj kapabloj / Nice to have skills |
+| `salary_range` | String(100) | Rango salarial string / Salajra intervalo / Salary range string |
+| `salary_min` | Float | Salario mínimo / Minimuma salajro / Minimum salary |
+| `salary_max` | Float | Salario máximo / Maksimuma salajro / Maximum salary |
+| `salary_currency` | String(10) | Moneda (USD, EUR, etc.) / Valuto / Currency |
+| `location` | String(200) | Ubicación / Loko / Location |
+| `is_remote` | Boolean | ¿Es remoto? / Ĉu malproksima? / Is remote? |
+| `remote_policy` | String(50) | Política remota / Malproksima politiko / Remote policy |
+| `country` | String(100) | País / Land / Country |
+| `city` | String(100) | Ciudad / Urbo / City |
+| `source_url` | String(500) | URL fuente (única) / Fonta URL (unika) / Source URL (unique) |
+| `source_platform` | String(100) | ATS platform / ATS platformo / ATS platform |
+| **`hiring_urgency_score`** | **Float (0-100)** | **🎯 Score de urgencia / Urĝeca poentaro / Urgency score** |
+| **`is_it_niche`** | **Boolean** | **🎯 ¿Nicho IT? / Ĉu IT-niĉo? / Is IT niche?** |
+| `posted_date` | DateTime | Fecha publicación / Publikigdata / Posted date |
+| `date_scraped` | DateTime | Fecha extracción / Ekstraktdata / Scraped date |
+| `last_verified` | DateTime | Última verificación / Lasta kontrolo / Last verified |
+| `is_active` | Boolean | ¿Activa? / Ĉu aktiva? / Is active? |
+| `created_at` | DateTime | Fecha creación / Kredata / Created date |
+| `updated_at` | DateTime | Fecha actualización / Ĝisdata / Updated date |
+| `scraping_errors` | Integer | Contador de errores / Erarnombro / Error count
 
 ### Ejecución básica / Baza plenumado / Basic execution
 
@@ -209,24 +286,54 @@ El sistema está diseñado para trabajar con los siguientes sistemas ATS:
 - 🟢 **Jobvite** - `jobvite.com`
 - 🟢 **iCIMS** - `icims.com`
 - 🟢 **Google Careers** - `careers.google.com`
+config.py`:
 
----
+```python
+class Settings(BaseSettings):
+    DEBUG_SQL: bool = True  # ← Cambiar a True
+```
 
-## ⚙️ Configuración / Agordado / Configuration
-
-### Variables de Entorno / Medio-variabloj / Environment Variables
-
-Crea un archivo `.env` basado en `.env.example`:
+### Ver base de datos / Vidi datumbazon / View database
 
 ```bash
-# Base de datos / Datumbazo / Database
-DATABASE_URL=sqlite:///./labortrovilo.db
+# Instalar SQLite viewer / Instali SQLite vidigilo
+pip install sqlite-web
 
-# Playwright
-PLAYWRIGHT_HEADLESS=true
-PLAYWRIGHT_TIMEOUT=30000
+# Ejecutar / Plenumi / Run
+sqlite_web labortrovilo.db
+```
 
-# User Agent
+### Ver estadísticas de BD / Vidi datumbazajn statistikojn / View DB stats
+
+```python
+from src.database import db_manager
+
+stats = db_manager.get_stats()
+print(stats)
+# Output: {'total_jobs': 10, 'totaltrilingües (Español/Esperanto/Inglés):
+
+```python
+# Inicializar base de datos / Ekigi datumbazon / Initialize database
+def init_db():
+    """
+    Inicializa la base de datos creando todas las tablas
+    Ekigas la datumbazon kreante ĉiujn tabelojn
+    Initializes the database creating all tables
+    """
+    # Crear todas las tablas / Krei ĉiujn tabelojn / Create all tables
+    Base.metadata.create_all(bind=engine)
+```
+
+### 📚 Documentación Adicional
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Guía de inicio rápido con ejemplos
+- **[src/models.py](src/models.py)** - Esquema completo de base de datos
+- **[src/schemas.py](src/schemas.py)** - Todos los esquemas de validación
+- **[src/scraper_engine.py](src/scraper_engine.py)** - Motor de scraping documentado
+- **[config.py](config.py)** - Todas las opciones configurables-Content -Path "logs\scraper.log" -Tail 20 -Wait
+
+# Linux/Mac
+tail -f logs/scraper.log
 USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 ```
 
@@ -248,25 +355,120 @@ company_name = await self.page.locator('.company-name').first.text_content()
 
 ### Agregar campos personalizados / Aldoni proprajn kampojn / Add custom fields
 
-1. Actualiza `models.py` para agregar columnas
-2. Actualiza `schemas.py` para validación
-3. Modifica `extract_job_data()` para extraer nuevos datos
-4. Ejecuta migraciones de base de datos
+1. 🎯 Campos Diferenciadores Implementados
+
+### 🚀 hiring_urgency_score (0-100)
+
+Score inteligente que calcula la urgencia de contratación basándose en:
+
+- ✅ **Palabras clave de urgencia**: "urgent", "immediate", "ASAP", "urgente", "inmediato"
+- ✅ **Fecha de publicación reciente**: +20 pts si < 3 días, +10 pts si < 7 días
+- ✅ **Indicadores en el título**: Senior, Lead positions (+5 pts)
+- ✅ **Score base**: 50 puntos
+
+**Ejemplo de uso:**
+```python
+# Jobs con urgency_score > 70 son altamente urgentes
+high_urgency_jobs = db.query(Job).filter(Job.hiring_urgency_score > 70).all()
+```
+
+### 🎯 is_it_niche (Boolean)
+
+Detecta automáticamente nichos especializados de IT:
+
+- ✅ **Blockchain & Web3**: blockchain, web3, crypto, smart contracts
+- ✅ **Quantum Computing**: quantum computing, quantum algorithms
+- ✅ **AI/ML Avanzado**: deep learning, computer vision, NLP, AI engineer
+- ✅ **Bioinformatics**: bioinformatics, computational biology
+- ✅ **Embedded Systems**: embedded systems, IoT, edge computing
+- ✅ **Graphics Programming**: game engine, shader programming, graphics
+
+**Ejemplo de uso:**
+```python
+# Filtrar trabajos de nicho especializado
+niche_jobs = db.query(Job).filter(Job.is_it_niche == True).all()
+```
 
 ---
 
-## 📊 Flujo de Trabajo / Laborfluado / Workflow
+## 🛡️ Seguridad y Manejo de Errores
 
-```mermaid
-graph TD
-    A[Iniciar Engine] --> B[Inicializar BD]
-    B --> C[Lanzar Playwright Browser]
-    C --> D[Navegar a URL]
-    D --> E[Extraer datos HTML]
-    E --> F[Validar con Pydantic]
-    F --> G{¿Datos válidos?}
-    G -->|Sí| H{¿URL duplicada?}
-    G -->|No| I[Registrar error]
+### ✅ Características de Seguridad Implementadas
+
+- **Try/Except en todos los métodos críticos**: El scraper nunca se detiene por un error
+- **Logging completo**: Todos los errores se registran con traceback en `logs/scraper.log`
+- **Validación Pydantic**: Datos validados antes de insertar en BD
+- **Prevención de duplicados**: URLs únicas con índices en BD
+- **Health checks**: Verificación de conexión a BD antes de operar
+- **Rate limiting**: Delays configurables entre requests
+
+### 📊 Sistema de Logging
+
+```
+logs/scraper.log
+├── INFO    : Operaciones normales y exitosas
+├── WARNING : Situaciones que requieren atención
+├── ERROR   : Errores capturados y manejados
+└── CRITICAL: Errores graves del sistema
+```
+
+**Ejemplo de log:**
+```
+2025-12-18 10:30:15 - INFO - 🌐 Navegando a: https://example.com/job
+2025-12-18 10:30:17 - INFO - ✓ Navegación exitosa: 200
+2025-12-18 10:30:18 - INFO - 📊 Extrayendo datos de la página...
+2025-12-18 10:30:19 - INFO - ✓ Datos extraídos: Senior Python Developer
+2025-12-18 10:30:19 - INFO -    📈 Urgency Score: 75.5
+2025-12-18 10:30:19 - INFO -    🎯 IT Niche: False
+2025-12-18 10:30:20 - INFO - ✅ Trabajo guardado en BD: Senior Python Developer (ID: 1)
+```
+
+---
+
+## 🚧 Roadmap / Planita Evoluado / Planned Development
+
+### ✅ Iteración 1: Base de Datos y Motor (COMPLETADO)
+- [x] Arquitectura Senior Data Engineer
+- [x] Modelos SQLAlchemy con campos diferenciadores
+- [x] Validación Pydantic robusta
+- [x] Motor de scraping con Playwright
+- [x] Sistema de logging y error handling
+- [x] Tests básicos implementados
+
+### ✅ Iteración 2: Módulo de Inteligencia Artificial (COMPLETADO) 🤖
+- [x] Integración con OpenAI GPT-4 y Anthropic Claude
+- [x] Procesamiento estructurado de descripciones con LLMs
+- [x] Extracción automática de tech stack normalizado
+- [x] Clasificación de seniority level (Intern → C-Level)
+- [x] Análisis de red flags en ofertas de trabajo
+- [x] Estimación salarial inteligente basada en contexto
+- [x] Detección de hiring intent (growth vs replacement)
+- [x] Sistema de caché para optimización de costos
+- [x] Documentación completa del módulo de IA
+- [x] Suite de tests para el módulo de IA
+
+📚 **Ver:** [AI_MODULE_README.md](AI_MODULE_README.md) para documentación completa
+
+### Iteración 3: Análisis Avanzado y ML
+- [ ] Embeddings para búsqueda semántica
+- [ ] Clasificación multi-label de categorías
+- [ ] Análisis de tendencias salariales por stack
+- [ ] Detección de bias en ofertas de trabajo
+- [ ] Sistema de recomendación de trabajos
+
+### Iteración 3: Interfaz Web
+- [ ] Frontend con React/Vue
+- [ ] API REST con FastAPI
+- [ ] Sistema de búsqueda y filtros avanzados
+- [ ] Dashboards analíticos con visualizaciones
+- [ ] Exportación a CSV/Excel
+
+### Iteración 4: Automatización
+- [ ] Scraping programado (cron jobs)
+- [ ] Notificaciones por email
+- [ ] Integración con Telegram/Discord
+- [ ] Sistema de alertas personalizadas por urgency_score
+- [ ] Verificación automática de vigencia de ofert
     H -->|No| J[Guardar en BD]
     H -->|Sí| K[Omitir - ya existe]
     J --> L[Cerrar navegador]
