@@ -42,3 +42,6 @@ jinja2>=3.1.2  # Email templates
 # Payments / Monetization
 stripe>=7.0.0  # Stripe payment processing
 httpx>=0.26.0  # Async HTTP client para webhooks
+
+# Growth & SEO
+Pillow>=10.1.0  # Generación de imágenes para social sharing

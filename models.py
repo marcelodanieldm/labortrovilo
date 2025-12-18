@@ -157,11 +157,20 @@ class User(Base):
     daily_search_limit = Column(Integer, default=5)  # Límite según tier
     last_search_reset = Column(DateTime, default=datetime.utcnow)  # Última vez que se reseteo el contador
     
+    # Sistema de Referidos (Growth)
+    referral_code = Column(String(20), unique=True, nullable=True, index=True)  # Código único de referido
+    referred_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)  # Quién lo refirió
+    referral_credits_earned = Column(Integer, default=0)  # Total de créditos ganados por referir
+    total_referrals = Column(Integer, default=0)  # Contador de referidos exitosos
+    
     # Relaciones
     alert_configs = relationship("AlertConfig", back_populates="user", cascade="all, delete-orphan")
     notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
     subscriptions = relationship("Subscription", back_populates="user", cascade="all, delete-orphan")
     transactions = relationship("Transaction", back_populates="user", cascade="all, delete-orphan")
+    
+    # Relación self-referential para referidos
+    referrer = relationship("User", remote_side=[id], foreign_keys=[referred_by_id], backref="referrals")
     
     def __repr__(self):
         return f"<User(email='{self.email}', role='{self.role}')>"

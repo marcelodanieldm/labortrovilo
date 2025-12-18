@@ -323,6 +323,34 @@ export const billingService = {
   },
 };
 
+// Servicios de Referidos
+export const referralService = {
+  // Obtener info de referidos del usuario
+  getInfo: () => {
+    return apiClient.get('/api/v1/user/referral');
+  },
+
+  // Obtener estadísticas detalladas
+  getStats: () => {
+    return apiClient.get('/api/v1/user/referral/stats');
+  },
+
+  // Aplicar código de referido
+  applyCode: (code) => {
+    return apiClient.post('/api/v1/user/referral/apply', { referral_code: code });
+  },
+
+  // Obtener leaderboard
+  getLeaderboard: (limit = 10) => {
+    return apiClient.get('/api/v1/user/referral/leaderboard', { limit });
+  },
+
+  // Obtener historial de referidos
+  getHistory: () => {
+    return apiClient.get('/api/v1/user/referral/history');
+  },
+};
+
 // Consolidar todos los servicios en un objeto api
 export const api = {
   jobs: jobService,
@@ -330,6 +358,7 @@ export const api = {
   analytics: analyticsService,
   auth: authService,
   billing: billingService,
+  referral: referralService,
 };
 
 // Mock data helper (para desarrollo sin backend)

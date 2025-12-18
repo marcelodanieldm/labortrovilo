@@ -59,6 +59,10 @@ from src.database import init_db, db_manager
 from src.alerts_router import router as alerts_router
 from src.billing_router import router as billing_router
 from src.stripe_webhooks import router as webhooks_router
+from src.seo_router import router as seo_router
+from src.social_images import router as social_images_router
+from src.referral_system import router as referral_router
+from src.public_router import router as public_router
 
 
 # ============================================================
@@ -99,6 +103,22 @@ app = FastAPI(
         {
             "name": "Billing",
             "description": "Endpoints de monetización y gestión de suscripciones Stripe"
+        },
+        {
+            "name": "SEO",
+            "description": "Sitemaps dinámicos y optimización para buscadores"
+        },
+        {
+            "name": "Social Images",
+            "description": "Generador de imágenes para compartir en redes sociales"
+        },
+        {
+            "name": "Referral System",
+            "description": "Sistema de referidos estilo Dropbox con recompensas"
+        },
+        {
+            "name": "Public Board",
+            "description": "Vista pública para SEO y lead generation"
         }
     ]
 )
@@ -107,6 +127,10 @@ app = FastAPI(
 app.include_router(alerts_router, prefix="/api/v1")
 app.include_router(billing_router, prefix="/api/v1")
 app.include_router(webhooks_router)  # Webhooks sin prefijo para compatibilidad con Stripe
+app.include_router(seo_router)  # SEO router sin prefijo (sitemap.xml, robots.txt en root)
+app.include_router(social_images_router, prefix="/api")  # Social images
+app.include_router(referral_router, prefix="/api/v1")  # Referral system
+app.include_router(public_router, prefix="/api/v1")  # Public board
 
 # CORS Middleware
 app.add_middleware(
