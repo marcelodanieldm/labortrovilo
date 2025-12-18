@@ -4,7 +4,10 @@
   "description": "Python-based job scraping platform using Playwright | Plataforma de scraping de trabajos basada en Python usando Playwright | Python-bazita laborskrapada platformo uzante Playwright",
   "main": "engine.py",
   "scripts": {
-    "note": "Este proyecto usa Python con Playwright. Los archivos JS son legacy.",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "legacy:test": "npx playwright test",
     "python:run": "python engine.py",
     "python:setup": "pip install -r requirements.txt && playwright install chromium"
@@ -29,9 +32,20 @@
     "url": "https://github.com/marcelodanieldm/labortrovilo/issues"
   },
   "homepage": "https://github.com/marcelodanieldm/labortrovilo#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "recharts": "^2.10.0",
+    "axios": "^1.6.0"
+  },
   "devDependencies": {
     "@playwright/test": "^1.53.1",
-    "@types/node": "^24.0.3"
+    "@types/node": "^24.0.3",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31"
   },
   "engines": {
     "python": ">=3.13"
