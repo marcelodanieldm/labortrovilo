@@ -57,6 +57,14 @@ class Settings(BaseSettings):
     AI_PROVIDER: str = "openai"  # openai o anthropic
     AI_MODEL: str = "gpt-4o-mini"  # gpt-4o-mini, gpt-4, claude-3-haiku, etc.
     AI_CACHE_ENABLED: bool = True  # Sistema de caché para evitar llamadas duplicadas
+    
+    # ============================================================
+    # CONFIGURACIÓN DE API / API AGORDADO / API CONFIGURATION
+    # ============================================================
+    SECRET_KEY: str = "CHANGE_THIS_IN_PRODUCTION_USE_STRONG_SECRET_KEY_MIN_32_CHARS"
+    API_TITLE: str = "Labortrovilo API"
+    API_VERSION: str = "1.0.0"
+    API_DESCRIPTION: str = "API REST para scraping y análisis de ofertas de trabajo con IA"
     LOG_BACKUP_COUNT: int = 5
     
     # ============================================================

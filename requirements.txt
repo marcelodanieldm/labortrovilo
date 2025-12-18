@@ -23,3 +23,11 @@ python-dateutil==2.8.2
 # AI / Machine Learning
 openai>=1.54.0  # API de OpenAI para GPT-4, GPT-4o-mini, etc.
 anthropic>=0.39.0  # API de Anthropic para Claude 3
+
+# API REST / Web Framework
+fastapi>=0.115.0  # Framework web moderno y rápido
+uvicorn[standard]>=0.34.0  # ASGI server para FastAPI
+python-jose[cryptography]>=3.3.0  # JWT tokens
+passlib[bcrypt]>=1.7.4  # Hash de contraseñas
+python-multipart>=0.0.9  # Form data support
+email-validator>=2.1.0  # Validación de emails para Pydantic

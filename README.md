@@ -45,6 +45,7 @@
 - 🎯 **Detección inteligente de ATS** (Greenhouse, Lever, Workday, etc.)
 - 🚀 **Arquitectura modular** lista para escalar
 - 🤖 **NEW: Módulo de IA** - Procesamiento con LLMs (GPT-4, Claude) para análisis inteligente
+- 🔐 **NEW: REST API con JWT** - API profesional con autenticación y roles jerárquicos (ver [API_README.md](API_README.md))
 
 ---
 
